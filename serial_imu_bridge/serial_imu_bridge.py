@@ -142,6 +142,12 @@ class SerialIMUBridge155Hz(Node):
             imu_msg.header.stamp = current_time
             imu_msg.header.frame_id = self.frame_id
 
+            # orientationを無効化
+            imu_msg.orientation.x = 0
+            imu_msg.orientation.y = 0
+            imu_msg.orientation.z = 0
+            imu_msg.orientation.w = 0
+
             # 加速度データ（155Hz時と同じ座標変換）
             imu_msg.linear_acceleration.x = -ax
             imu_msg.linear_acceleration.y = -ay
@@ -150,7 +156,7 @@ class SerialIMUBridge155Hz(Node):
             # 角速度データ
             imu_msg.angular_velocity.x = -gx
             imu_msg.angular_velocity.y = -gy
-            imu_msg.angular_velocity.z = gz
+            imu_msg.angular_velocity.z = -gz
 
             # 共分散行列（155Hz時と同じ）
             imu_msg.linear_acceleration_covariance = [-1.0] * 9
